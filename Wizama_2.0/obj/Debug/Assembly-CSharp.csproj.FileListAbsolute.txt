@@ -1,0 +1,2 @@
+C:\Users\Matt\Desktop\Game Making\Wizama_2.0\Wizama_2.0\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\Matt\Desktop\Game Making\Wizama_2.0\Wizama_2.0\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
