@@ -8,6 +8,8 @@ public class Player : MonoBehaviour {
     [SerializeField]
     public int m_playerId;
 
+    public int m_touchId;
+
     private TilesScript m_currentTile;
     public TilesScript currentTile
     {

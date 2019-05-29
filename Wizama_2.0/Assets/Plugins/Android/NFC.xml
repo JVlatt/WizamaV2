@@ -1,0 +1,312 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NFC</name>
+    </assembly>
+    <members>
+        <member name="T:Wizama.NFC.NFC_DEVICE_ID">
+            <summary>
+            Ids of  NFC devices
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFC_DEVICE_ID.DICE_TRACK">
+            <summary>
+            External dice track
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFC_DEVICE_ID.ANTENNA_1">
+            <summary>
+            Bottom right antenna
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFC_DEVICE_ID.ANTENNA_2">
+            <summary>
+            Bottom middle antenna
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFC_DEVICE_ID.ANTENNA_3">
+            <summary>
+            Bottom left antenna
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFC_DEVICE_ID.ANTENNA_4">
+            <summary>
+            Left bottom antenna
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFC_DEVICE_ID.ANTENNA_5">
+            <summary>
+            Left middle antenna
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFC_DEVICE_ID.ANTENNA_6">
+            <summary>
+            Left top antenna
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFC_DEVICE_ID.ANTENNA_7">
+            <summary>
+            Top left antenna
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFC_DEVICE_ID.ANTENNA_8">
+            <summary>
+            Top middle antenna
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFC_DEVICE_ID.ANTENNA_9">
+            <summary>
+            Top right antenna
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFC_DEVICE_ID.ANTENNA_10">
+            <summary>
+            Right top antenna
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFC_DEVICE_ID.ANTENNA_11">
+            <summary>
+            Right middle antenna
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFC_DEVICE_ID.ANTENNA_12">
+            <summary>
+            Right bottom antenna
+            </summary>
+        </member>
+        <member name="T:Wizama.NFC.NFCController">
+            <summary>
+            Class controlling the NFC features
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCController.driverInstance">
+            <summary>
+            Nfc driver instance
+            </summary>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.createInstance">
+            <summary>
+            Native function to create the NFC driver instance
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.startNfcPolling(System.IntPtr,System.Int32)">
+            <summary>
+            Native function to start polling the NFC devices
+            </summary>
+            <param name="nfcDriverPtr">Instance of the driver</param>
+            <param name="antennaId">Bitfield indicated which antennas to poll</param>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.stopNfcPolling(System.IntPtr)">
+            <summary>
+            Native function to stop polling the NFC devices
+            </summary>
+            <param name="nfcDriverPtr">Instance of the driver</param>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.getTagsValue(System.IntPtr,System.Text.StringBuilder[])">
+            <summary>
+            Native function to get the tags currently on the NFC devices
+            </summary>
+            <param name="nfcDriverPtr">Instance of the driver</param>
+            <param name="results">List of the NFC tags currently on the NFC devices</param>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.releaseInstance(System.IntPtr)">
+            <summary>
+            Native function to release the instance of the driver
+            </summary>
+            <param name="nfcDriverPtr">Instance of the driver</param>
+        </member>
+        <member name="F:Wizama.NFC.NFCController.CanReadNFC">
+            <summary>
+            Is the NFC controller able and ready to read NFC tags
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCController.nbNFCDevices">
+            <summary>
+            Number of NFC devices that can be polled
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCController.broadCastReceiverClass">
+            <summary>
+            Class of the broadcast receiver for the bluetooth dicetrack
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCController.sba">
+            <summary>
+            Array of string builders to parse the NFC tags data
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCController.pollingRunning">
+            <summary>
+            Is the polling already running
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCController.pollingRunningSave">
+            <summary>
+            Was the polling running when the game paused
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCController.pollingAsyncSave">
+            <summary>
+            Is the polling asynchronous
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCController.pollAntennaIdsSave">
+            <summary>
+            The Ids of antennas currently polled
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCController.lastFrameTags">
+            <summary>
+            The frames read last frame
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCController.Instance">
+            <summary>
+            Singleton instance
+            </summary>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.Awake">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.OnDestroy">
+            <summary>
+            Destructor
+            </summary>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.StartPolling(Wizama.NFC.NFC_DEVICE_ID[])">
+            <summary>
+            Start polling the NFC devices
+            </summary>
+            <param name="deviceIds">Ids of devices to poll</param>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.StartPollingInternal(Wizama.NFC.NFC_DEVICE_ID[])">
+            <summary>
+            Internal start polling
+            </summary>
+            <param name="deviceIds"></param>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.StopPolling">
+            <summary>
+            Stop polling the NFC devices
+            </summary>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.StopPollingInternal">
+            <summary>
+            Internal stop polling
+            </summary>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.GetTags(Wizama.NFC.NFC_DEVICE_ID[])">
+            <summary>
+            Get tags currently on the active NFC devices specified in parameters
+            </summary>
+            <param name="deviceIds">List of device ids to query</param>
+            <returns>List of the tags</returns>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.GetTagsInternal(Wizama.NFC.NFC_DEVICE_ID[])">
+            <summary>
+            Internal get tags
+            </summary>
+            <param name="deviceIds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.GetTags">
+            <summary>
+            Get all the tags currently on the active NFC devices
+            </summary>
+            <returns>List of the tags sort by device id</returns>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.GetTagsInternal">
+            <summary>
+            Internal get tags
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Wizama.NFC.NFCController.OnNewTag">
+            <summary>
+            Callback triggered when a tag is placed on an active NFC device
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCController.OnTagRemoved">
+            <summary>
+            Callback triggered when a tag is removed from an active NFC device
+            </summary>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.StartPollingAsync(Wizama.NFC.NFC_DEVICE_ID[])">
+            <summary>
+            Start polling asynchronously the NFC devices
+            </summary>
+            <param name="deviceIds">Ids of devices to poll</param>
+        </member>
+        <member name="M:Wizama.NFC.NFCController.AsyncPolling">
+            <summary>
+            Coroutine to check state modifications of the NFC devices
+            </summary>
+        </member>
+        <member name="T:Wizama.NFC.NFCTag">
+            <summary>
+            Class representing a NFCTag
+            </summary>
+        </member>
+        <member name="T:Wizama.NFC.NFCTag.TagType">
+            <summary>
+            Type of tag
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCTag.TagType.UNDEFINED">
+            <summary>
+            Undefined type
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCTag.TagType.PAWN">
+            <summary>
+            Pawn type
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCTag.TagType.DICE">
+            <summary>
+            Dice type
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCTag.TagType.CARD">
+            <summary>
+            Card type
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCTag.TagType.TOKEN">
+            <summary>
+            Token type
+            </summary>
+        </member>
+        <member name="F:Wizama.NFC.NFCTag.TagType.RESOURCE">
+            <summary>
+            Resource type
+            </summary>
+        </member>
+        <member name="M:Wizama.NFC.NFCTag.#ctor(Wizama.NFC.NFCTag.TagType,System.String,System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="type">Tag type</param>
+            <param name="id">Tag id</param>
+            <param name="data">Tag data</param>
+        </member>
+        <member name="P:Wizama.NFC.NFCTag.Type">
+            <summary>
+            Accessor on the tag type
+            </summary>
+        </member>
+        <member name="P:Wizama.NFC.NFCTag.Id">
+            <summary>
+            Accessor on the tag id
+            </summary>
+        </member>
+        <member name="P:Wizama.NFC.NFCTag.Data">
+            <summary>
+            Accessor on the tag data
+            </summary>
+        </member>
+    </members>
+</doc>

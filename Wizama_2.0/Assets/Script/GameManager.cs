@@ -34,33 +34,13 @@ namespace Assets.Script
             set
             {
                 m_diceValue = value;
-                if (m_diceValue == 0)
-                    ChangePlayerRound();//changement de tour quand le compteur du dé est à 0;
             }
         }
         #endregion
 
         #region Variable
-        public enum PlayerRound
-        {
-            P1 = 0,
-            P2,
-            P3,
-            P4
-        }
-        public PlayerRound m_currentPlayerRound = PlayerRound.P1;
 
         public List<Player> m_playerList;
-        public List<PlayerRound> m_PlayerRoundList;
-        private int IndexRound;
-
-        public Player m_currentPlayer;
-        public Player currentPlayer
-        {
-            get { return m_currentPlayer; }
-            set { m_currentPlayer = value; }
-        }
-
 
         public TilesScript[,] m_tilesTab;
 
@@ -93,10 +73,10 @@ namespace Assets.Script
             }
         }
 
-        private void FindSelectableTiles()
+        private void FindSelectableTiles(Player player)
         {
             ComputeAdjacencyLists();
-            _currentTile = GetCurrentTile(m_currentPlayer);
+            _currentTile = GetCurrentTile(player);
 
             // Start BFS
 
@@ -138,16 +118,7 @@ namespace Assets.Script
             m_playerList = playerList;
             Debug.Log(m_playerList.Count);
             PlayerPosition();
-            m_currentPlayer = m_playerList[0];
-            NextRound();
             m_bombList = new List<BombeScript>();
-
-            m_PlayerRoundList = new List<PlayerRound>();
-            m_PlayerRoundList.Add(PlayerRound.P1);
-            m_PlayerRoundList.Add(PlayerRound.P2);
-            m_PlayerRoundList.Add(PlayerRound.P3);
-            m_PlayerRoundList.Add(PlayerRound.P4);
-
         }
 
         public void InitTilesTab(TilesScript[,] TilesTab, int TilesTabWidth, int TilesTabHeight)
@@ -174,46 +145,31 @@ namespace Assets.Script
             
         }
 
-        public void ChangePlayerRound() // meilleur maintenant
-        {
-            CheckOnBomb();
-
-            IndexRound += 1;
-            if (IndexRound > m_playerList.Count - 1)
-                IndexRound = 0;
-
-            m_currentPlayer = m_playerList[IndexRound];
-            //m_currentPlayerRound = m_PlayerRoundList[IndexRound];
-            NextRound();
-        }
+        
 
         public void NextRound()//déroulement d'un tour
         {
-            m_diceValue = Random.Range(1, 6);
-            FindSelectableTiles();
+            m_diceValue = 1;
+            FindSelectableTiles(m_playerList[0]);
+            FindSelectableTiles(m_playerList[1]);
+            FindSelectableTiles(m_playerList[2]);
+            FindSelectableTiles(m_playerList[3]);
         }
 
-        public void MovePlayer(GameObject tile)//appelé lorsqu'on click sur une tiles accessible par le player;
+        public void MovePlayer(TilesScript tile, Player player)//appelé lorsqu'on click sur une tiles accessible par le player;
         {
-            if (tile.GetComponent<TilesScript>().walkableTile)
+            if (tile.walkableTile)
             {
-                GetCurrentTile(m_currentPlayer).walkableTile = true;
-                m_currentPlayer.transform.position = tile.transform.position;
-                TilesScript tileObject = tile.GetComponent<TilesScript>();
-                diceValue -= tileObject.distance;
-                tileObject.walkableTile = false;
+                GetCurrentTile(player).walkableTile = true;
+                player.transform.position = tile.transform.position;
+                diceValue -= tile.distance;
+                tile.walkableTile = false;
                 foreach (TilesScript t in m_tilesTab)
                     t.Reset();
 
-                FindSelectableTiles();
+                FindSelectableTiles(player);
             }
         }
-
-        public void EndTurn()
-        {
-            ChangePlayerRound();
-        }
-
         public void CheckOnBomb()
         {
             List<BombeScript> copyBombList = new List<BombeScript>();

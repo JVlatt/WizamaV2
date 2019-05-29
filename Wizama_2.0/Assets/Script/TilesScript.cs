@@ -189,13 +189,4 @@ public class TilesScript : MonoBehaviour {
         if (_currentPlayerOnTile)
             _currentPlayerOnTile.Die();
     }
-
-    void OnMouseDown()
-    {
-        if (_selectableTile)
-        {
-            GameManager.GetManager().currentPlayer.Move(this);
-            GameManager.GetManager().MovePlayer(gameObject);
-        }
-    }
 }
